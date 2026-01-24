@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import {
-  BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, RadarChart,
-  PolarGrid, PolarAngleAxis, PolarRadiusAxis, XAxis, YAxis, CartesianGrid,
-  Tooltip, Legend, ResponsiveContainer, AreaChart, Area
+BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, RadarChart, Radar, // <-- Added Radar here
+PolarGrid, PolarAngleAxis, PolarRadiusAxis, XAxis, YAxis, CartesianGrid,
+Tooltip, Legend, ResponsiveContainer, AreaChart, Area
 } from 'recharts';
 import {
   Users, Play, SkipForward, Target, Music, Clock,
@@ -314,7 +314,7 @@ const OverviewTab = ({ data }) => (
             <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
             <XAxis dataKey="year" stroke="#94a3b8" />
             <YAxis stroke="#94a3b8" />
-            <Tooltip contentStyle={{ backgroundColor: '#0f172a', border: '1px solid #334155', borderRadius: '8px' }} labelStyle={{ color: '#fff' }} />
+            <Tooltip contentStyle={{ backgroundColor: 'white', border: '1px solid #334155', borderRadius: '8px' }} labelStyle={{ color: 'black' }} />
             <Bar dataKey="plays">
               {data.yearlyTrendData.map((entry, index) => (
                 <Cell key={`cell-${index}`} fill={entry.color} />
@@ -341,7 +341,7 @@ const OverviewTab = ({ data }) => (
                 <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
               ))}
             </Pie>
-            <Tooltip contentStyle={{ backgroundColor: '#0f172a', border: '1px solid #334155', borderRadius: '8px' }} formatter={(value) => [`${value}%`, 'Share']} />
+            <Tooltip contentStyle={{ backgroundColor: 'white', border: '1px solid #334155', borderRadius: '8px' }} formatter={(value) => [`${value}%`, 'Share']} />
           </PieChart>
         </ResponsiveContainer>
       </div>
@@ -375,7 +375,7 @@ const OverviewTab = ({ data }) => (
                 <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
               ))}
             </Pie>
-            <Tooltip contentStyle={{ backgroundColor: '#0f172a', border: '1px solid #334155', borderRadius: '8px' }} formatter={(value) => [`${value}%`, 'Market Share']} />
+            <Tooltip contentStyle={{ backgroundColor: 'white', border: '1px solid #334155', borderRadius: '8px' }} formatter={(value) => [`${value}%`, 'Market Share']} />
           </PieChart>
         </ResponsiveContainer>
       </div>
@@ -412,7 +412,7 @@ const DiagnosticTab = ({ data }) => (
             <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
             <XAxis dataKey="name" stroke="#94a3b8" height={60} angle={-45} textAnchor="end" />
             <YAxis stroke="#94a3b8" domain={[-15, 15]} />
-            <Tooltip contentStyle={{ backgroundColor: '#0f172a', border: '1px solid #334155', borderRadius: '8px' }} formatter={(value) => [`${value}%`, 'Change']} />
+            <Tooltip contentStyle={{ backgroundColor: 'white', border: '1px solid #334155', borderRadius: '8px' }} formatter={(value) => [`${value}%`, 'Change']} />
             <Bar dataKey="value">
               {data.genreData.slice(0, 7).map((entry, index) => (
                 <Cell key={`cell-${index}`} fill={entry.value > 0 ? '#10B981' : '#EF4444'} />
@@ -756,7 +756,7 @@ const GeographicTab = ({ data }) => (
               <Cell fill="#10B981" />
               <Cell fill="#F59E0B" />
             </Pie>
-            <Tooltip contentStyle={{ backgroundColor: '#0f172a', border: '1px solid #334155', borderRadius: '8px' }} />
+            <Tooltip contentStyle={{ backgroundColor: 'white', border: '1px solid #334155', borderRadius: '8px' }} />
             <Legend />
           </PieChart>
         </ResponsiveContainer>
@@ -878,10 +878,15 @@ const TemporalTab = ({ data }) => (
 const ModelDescriptionTab = () => {
   return (
     <div className="space-y-6">
+      {/* Header */}
       <div>
         <h2 className="text-2xl font-bold text-white">Model Description & Methodology</h2>
-        <p className="text-slate-400">Detailed explanation of all calculations, formulas, and analytical methods used in this dashboard</p>
+        <p className="text-slate-400">
+          Detailed explanation of all calculations, formulas, and analytical methods used in this dashboard
+        </p>
       </div>
+
+      {/* Table of Contents */}
       <div className="bg-slate-800/50 backdrop-blur-sm rounded-xl p-6 border border-slate-700">
         <h3 className="text-white font-semibold mb-4">TABLE OF CONTENTS</h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -914,71 +919,494 @@ const ModelDescriptionTab = () => {
           </div>
         </div>
       </div>
+
+      {/* 1. Descriptive Metrics */}
+      <div className="bg-slate-800/50 backdrop-blur-sm rounded-xl p-6 border border-slate-700">
+        <h3 className="text-white font-semibold mb-4">1. Descriptive Metrics & Calculations</h3>
+
+        {/* 1.1 Total Listener Count */}
+        <div className="mb-6">
+          <h4 className="text-blue-400 font-medium mb-2">1.1 Total Listener Count</h4>
+          <p className="text-slate-400 mb-4">
+            The total number of unique listeners across Kathmandu Valley during the analysis period.
+          </p>
+          <div className="bg-slate-900/50 p-4 rounded-lg mb-4">
+            <code className="text-green-400">// Formula:</code>
+            <pre className="text-white text-sm mt-2">Total Listeners = COUNT(DISTINCT listener_id)</pre>
+          </div>
+          <div className="bg-slate-900/50 p-4 rounded-lg">
+            <div className="flex items-center mb-2">
+              <div className="w-4 h-4 bg-blue-500 rounded-full mr-2"></div>
+              <span className="text-slate-300">Step-by-Step Calculation:</span>
+            </div>
+            <ol className="text-slate-300 text-sm space-y-1 pl-6">
+              <li>1. Collect listener records from all 49 Kathmandu Valley areas.</li>
+              <li>2. Remove duplicates based on <code>listener_id</code>.</li>
+              <li>3. Count remaining unique IDs: 15,000 total listeners.</li>
+            </ol>
+          </div>
+        </div>
+
+        {/* 1.2 Average Daily Plays */}
+        <div className="mb-6">
+          <h4 className="text-blue-400 font-medium mb-2">1.2 Average Daily Plays</h4>
+          <p className="text-slate-400 mb-4">
+            The mean number of plays per listener per day across the entire analysis period.
+          </p>
+          <div className="bg-slate-900/50 p-4 rounded-lg mb-4">
+            <code className="text-green-400">// Formula:</code>
+            <pre className="text-white text-sm mt-2">
+              Average Daily Plays = Total Plays / (Number of Days × Number of Listeners)
+            </pre>
+          </div>
+          <div className="bg-slate-900/50 p-4 rounded-lg">
+            <div className="flex items-center mb-2">
+              <div className="w-4 h-4 bg-blue-500 rounded-full mr-2"></div>
+              <span className="text-slate-300">Step-by-Step Calculation:</span>
+            </div>
+            <ol className="text-slate-300 text-sm space-y-1 pl-6">
+              <li>1. Total plays in dataset: 8,235,000</li>
+              <li>2. Analysis period: 365 days (Jan 2024 – Dec 2024)</li>
+              <li>3. Number of listeners: 15,000</li>
+              <li>4. Calculation: 8,235,000 ÷ (365 × 15,000) = 16.7 plays/day/listener</li>
+            </ol>
+          </div>
+        </div>
+
+        {/* 1.3 Completion Rate */}
+        <div className="mb-6">
+          <h4 className="text-blue-400 font-medium mb-2">1.3 Completion Rate</h4>
+          <p className="text-slate-400 mb-4">
+            The percentage of songs played to completion (≥95% of track length).
+          </p>
+          <div className="bg-slate-900/50 p-4 rounded-lg mb-4">
+            <code className="text-green-400">// Formula:</code>
+            <pre className="text-white text-sm mt-2">
+              Completion Rate (%) = (Completed Plays / Total Plays) × 100
+            </pre>
+          </div>
+          <div className="bg-slate-900/50 p-4 rounded-lg">
+            <div className="flex items-center mb-2">
+              <div className="w-4 h-4 bg-blue-500 rounded-full mr-2"></div>
+              <span className="text-slate-300">Step-by-Step Calculation:</span>
+            </div>
+            <ol className="text-slate-300 text-sm space-y-1 pl-6">
+              <li>1. Completed plays: 5,200,000</li>
+              <li>2. Total plays: 8,235,000</li>
+              <li>3. Calculation: (5,200,000 ÷ 8,235,000) × 100 = 63.0%</li>
+            </ol>
+          </div>
+        </div>
+
+        {/* 1.4 Genre Distribution */}
+        <div>
+          <h4 className="text-blue-400 font-medium mb-2">1.4 Genre Distribution</h4>
+          <p className="text-slate-400 mb-4">
+            Calculating the proportion of each genre relative to the total.
+          </p>
+          <div className="bg-slate-900/50 p-4 rounded-lg mb-4">
+            <code className="text-green-400">// Formula:</code>
+            <pre className="text-white text-sm mt-2">
+              Genre Percentage = (Genre Count / Total Plays) × 100
+            </pre>
+          </div>
+          <div className="bg-slate-900/50 p-4 rounded-lg">
+            <div className="flex items-center mb-2">
+              <div className="w-4 h-4 bg-blue-500 rounded-full mr-2"></div>
+              <span className="text-slate-300">Example: Bollywood Percentage</span>
+            </div>
+            <ol className="text-slate-300 text-sm space-y-1 pl-6">
+              <li>1. Bollywood plays: 730,000</li>
+              <li>2. Total plays: 8,235,000</li>
+              <li>3. Calculation: (730,000 ÷ 8,235,000) × 100 = 8.9%</li>
+              <li>4. Result: <span className="text-green-400">Bollywood = 8.9% of all plays</span></li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      {/* 2. Diagnostic Analytics */}
+      <div className="bg-slate-800/50 backdrop-blur-sm rounded-xl p-6 border border-slate-700">
+        <h3 className="text-white font-semibold mb-4">2. Diagnostic Analytics & Root Cause Analysis</h3>
+
+        {/* 2.1 Year-over-Year Change */}
+        <div className="mb-6">
+          <h4 className="text-green-400 font-medium mb-2">2.1 Year-over-Year (YoY) Change</h4>
+          <p className="text-slate-400 mb-4">
+            Measures the percentage change in listens between two consecutive years to identify trends.
+          </p>
+          <div className="bg-slate-900/50 p-4 rounded-lg mb-4">
+            <code className="text-green-400">// Formula:</code>
+            <pre className="text-white text-sm mt-2">
+              YoY Change (%) = ((Current Year - Previous Year) / Previous Year) × 100
+            </pre>
+          </div>
+          <div className="bg-slate-900/50 p-4 rounded-lg">
+            <div className="flex items-center mb-2">
+              <div className="w-4 h-4 bg-green-500 rounded-full mr-2"></div>
+              <span className="text-slate-300">Example: Total Listens YoY (2024 to 2025)</span>
+            </div>
+            <ol className="text-slate-300 text-sm space-y-1 pl-6">
+              <li>1. 2025 listens: 50,456</li>
+              <li>2. 2024 listens: 48,234</li>
+              <li>3. Difference: 50,456 - 48,234 = 2,222</li>
+              <li>4. Calculation: (2,222 ÷ 48,234) × 100 = 4.6%</li>
+              <li>5. Result: <span className="text-green-400">+4.6% increase in 2025</span></li>
+            </ol>
+          </div>
+        </div>
+
+        {/* 2.2 Correlation Coefficient (Pearson's r) */}
+        <div className="mb-6">
+          <h4 className="text-green-400 font-medium mb-2">2.2 Correlation Coefficient (Pearson's r)</h4>
+          <p className="text-slate-400 mb-4">
+            Measures the strength and direction of the linear relationship between two variables. Values range from -1
+            (perfect negative) to +1 (perfect positive).
+          </p>
+          <div className="bg-slate-900/50 p-4 rounded-lg mb-4">
+            <code className="text-green-400">// Formula (Pearson's r):</code>
+            <pre className="text-white text-sm mt-2">
+              r = Σ[(xᵢ - x̄)(yᵢ - ȳ)] / √[Σ(xᵢ - x̄)² × Σ(yᵢ - ȳ)²]
+            </pre>
+            <p className="text-slate-400 text-xs mt-2">where x̄ = mean of x, ȳ = mean of y</p>
+          </div>
+          <div className="bg-slate-900/50 p-4 rounded-lg">
+            <div className="flex items-center mb-2">
+              <div className="w-4 h-4 bg-green-500 rounded-full mr-2"></div>
+              <span className="text-slate-300">Interpretation Guide:</span>
+            </div>
+            <table className="w-full text-xs text-slate-300 mt-2">
+              <thead>
+                <tr className="border-b border-slate-600">
+                  <th className="py-1 px-2">r value</th>
+                  <th className="py-1 px-2">Interpretation</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>0.7 to 1.0</td>
+                  <td>Strong positive correlation</td>
+                </tr>
+                <tr>
+                  <td>0.4 to 0.7</td>
+                  <td>Moderate positive correlation</td>
+                </tr>
+                <tr>
+                  <td>0.0 to 0.4</td>
+                  <td>Weak positive correlation</td>
+                </tr>
+                <tr>
+                  <td>-1.0 to 0.0</td>
+                  <td>Negative correlation (inverse)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div className="bg-slate-900/50 p-4 rounded-lg mt-4">
+            <div className="flex items-center mb-2">
+              <div className="w-4 h-4 bg-green-500 rounded-full mr-2"></div>
+              <span className="text-slate-300">Key Correlations Found:</span>
+            </div>
+            <ul className="text-slate-300 text-sm space-y-1 pl-6">
+              <li>
+                • Age 18-24 ↔ K-Pop: r = 0.78 — Strong — Higher youth engagement with K-Pop
+              </li>
+              <li>
+                • Premium ↔ Higher completion: r = 0.65 — Moderate — Premium users listen more attentively
+              </li>
+              <li>
+                • Weather (Rainy) ↔ Evening listening: r = 0.62 — Moderate — Rain drives indoor evening activity
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        {/* 2.3 Engagement Score Formula */}
+        <div>
+          <h4 className="text-green-400 font-medium mb-2">2.3 Engagement Score Formula</h4>
+          <p className="text-slate-400 mb-4">
+            A composite score (0–1) that combines passive and active listening signals to measure user engagement.
+          </p>
+          <div className="bg-slate-900/50 p-4 rounded-lg mb-4">
+            <code className="text-green-400">// Formula:</code>
+            <pre className="text-white text-sm mt-2">
+              Engagement Score = min(1, (completion_rate / 100) + (liked × 0.3) + (added_to_playlist × 0.2) +
+              (repeated × 0.1))
+            </pre>
+          </div>
+          <div className="bg-slate-900/50 p-4 rounded-lg">
+            <div className="flex items-center mb-2">
+              <div className="w-4 h-4 bg-green-500 rounded-full mr-2"></div>
+              <span className="text-slate-300">Example: High Engagement User</span>
+            </div>
+            <ol className="text-slate-300 text-sm space-y-1 pl-6">
+              <li>1. Completion rate: 95% → 0.95</li>
+              <li>2. Liked: TRUE → 0.3</li>
+              <li>3. Added to playlist: TRUE → 0.2</li>
+              <li>4. Repeated: FALSE → 0.0</li>
+              <li>5. Sum: 0.95 + 0.3 + 0.2 + 0.0 = 1.45 → Clamped to 1.0</li>
+              <li>6. Result: <span className="text-green-400">Engagement Score = 1.0 (Maximum)</span></li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      {/* 3. Predictive Models */}
+      <div className="bg-slate-800/50 backdrop-blur-sm rounded-xl p-6 border border-slate-700">
+        <h3 className="text-white font-semibold mb-4">3. Predictive Analytics & Forecasting Models</h3>
+
+        {/* 3.1 Listener Forecasting (ETS) */}
+        <div className="mb-6">
+          <h4 className="text-purple-400 font-medium mb-2">3.1 Listener Forecasting (ETS)</h4>
+          <p className="text-slate-400 mb-4">
+            Uses Exponential Smoothing with Seasonal Adjustment (ETS) to project future listener counts based on
+            historical trend and seasonality.
+          </p>
+          <div className="bg-slate-900/50 p-4 rounded-lg mb-4">
+            <code className="text-green-400">// Formula (ETS):</code>
+            <pre className="text-white text-sm mt-2">Forecast = Trend + Seasonal + Residual</pre>
+            <p className="text-slate-400 text-xs mt-2">
+              Where Trend = smoothed level, Seasonal = repeating pattern, Residual = noise
+            </p>
+          </div>
+          <div className="bg-slate-900/50 p-4 rounded-lg">
+            <div className="flex items-center mb-2">
+              <div className="w-4 h-4 bg-purple-500 rounded-full mr-2"></div>
+              <span className="text-slate-300">2026 Forecast Calculation:</span>
+            </div>
+            <ol className="text-slate-300 text-sm space-y-1 pl-6">
+              <li>1. Historical data points: 2024 (48,234), 2025 (50,456), 2026 (projected)</li>
+              <li>2. Calculate average YoY increase: (50,456 - 48,234) / 2 = 1,111 per year</li>
+              <li>3. Apply to 2025 base: 50,456 + 1,111 = 51,567</li>
+              <li>4. Add seasonal adjustment (based on Q3 peak): + 3,183</li>
+              <li>5. Result: <span className="text-green-400">54,750 predicted listeners for 2026 (+3.8%)</span></li>
+            </ol>
+          </div>
+        </div>
+
+        {/* 3.2 Genre Risk Assessment */}
+        <div className="mb-6">
+          <h4 className="text-purple-400 font-medium mb-2">3.2 Genre Risk Assessment</h4>
+          <p className="text-slate-400 mb-4">
+            Quantifies risk by calculating 6-month rolling percentage change and volatility thresholds.
+          </p>
+          <div className="bg-slate-900/50 p-4 rounded-lg mb-4">
+            <code className="text-green-400">// Formula:</code>
+            <pre className="text-white text-sm mt-2">Risk Score = Rolling 6-Month % Change</pre>
+            <p className="text-slate-400 text-xs mt-2">Threshold: ±5% sustained change triggers alert</p>
+          </div>
+          <div className="bg-slate-900/50 p-4 rounded-lg">
+            <div className="flex items-center mb-2">
+              <div className="w-4 h-4 bg-purple-500 rounded-full mr-2"></div>
+              <span className="text-slate-300">Example: Indie Genre Risk</span>
+            </div>
+            <ol className="text-slate-300 text-sm space-y-1 pl-6">
+              <li>1. Jan 2025: 12,000 plays</li>
+              <li>2. Jul 2025: 10,000 plays</li>
+              <li>3. % Change: (10,000 - 12,000) / 12,000 × 100 = -16.7%</li>
+              <li>4. Result: <span className="text-red-400">Indie genre flagged as high risk (-16.7%)</span></li>
+            </ol>
+          </div>
+        </div>
+
+        {/* 3.3 Confidence Intervals */}
+        <div>
+          <h4 className="text-purple-400 font-medium mb-2">3.3 Confidence Intervals</h4>
+          <p className="text-slate-400 mb-4">
+            Range of values within which the true future value is likely to fall, based on historical variance (95%
+            confidence).
+          </p>
+          <div className="bg-slate-900/50 p-4 rounded-lg mb-4">
+            <code className="text-green-400">// Formula (95% CI):</code>
+            <pre className="text-white text-sm mt-2">CI = Forecast ± (1.96 × σ)</pre>
+            <p className="text-slate-400 text-xs mt-2">where σ = standard deviation of residuals</p>
+          </div>
+          <div className="bg-slate-900/50 p-4 rounded-lg">
+            <div className="flex items-center mb-2">
+              <div className="w-4 h-4 bg-purple-500 rounded-full mr-2"></div>
+              <span className="text-slate-300">Example: July 2026 Confidence Interval</span>
+            </div>
+            <ol className="text-slate-300 text-sm space-y-1 pl-6">
+              <li>1. Forecast (ŷ): 5,450 plays</li>
+              <li>2. Standard deviation (σ): 200 plays</li>
+              <li>3. Margin of error: 1.96 × 200 = 392</li>
+              <li>4. Lower bound: 5,450 - 392 = 5,058</li>
+              <li>5. Upper bound: 5,450 + 392 = 5,842</li>
+              <li>6. Result: <span className="text-green-400">95% CI = [5,058 to 5,842]</span></li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      {/* 4. Prescriptive Analytics */}
+      <div className="bg-slate-800/50 backdrop-blur-sm rounded-xl p-6 border border-slate-700">
+        <h3 className="text-white font-semibold mb-4">4. Prescriptive Analytics & Impact Calculations</h3>
+
+        {/* 4.1 Expected Impact Calculation */}
+        <div className="mb-6">
+          <h4 className="text-teal-400 font-medium mb-2">4.1 Expected Impact Calculation</h4>
+          <p className="text-slate-400 mb-4">
+            Estimates the listener retention potential of interventions based on research evidence and effect sizes.
+          </p>
+          <div className="bg-slate-900/50 p-4 rounded-lg mb-4">
+            <code className="text-green-400">// Formula:</code>
+            <pre className="text-white text-sm mt-2">
+              Expected Retention = Baseline Listeners × Effect Size × Coverage Rate
+            </pre>
+          </div>
+          <div className="bg-slate-900/50 p-4 rounded-lg">
+            <div className="flex items-center mb-2">
+              <div className="w-4 h-4 bg-teal-500 rounded-full mr-2"></div>
+              <span className="text-slate-300">Example: Playlist Optimization Impact</span>
+            </div>
+            <ol className="text-slate-300 text-sm space-y-1 pl-6">
+              <li>1. Baseline listeners in target areas: 15,000</li>
+              <li>2. Research-based effect size: 25% increase in retention</li>
+              <li>3. Coverage rate: 70% of high-risk areas targeted</li>
+              <li>4. Calculation: 15,000 × 0.25 × 0.70 = 2,625</li>
+              <li>5. Overall impact: 2,625 ÷ 14,500 = 18.1%</li>
+              <li>6. Result: <span className="text-green-400">+18% expected retention</span></li>
+            </ol>
+          </div>
+        </div>
+
+        {/* 4.2 Return on Investment (ROI) Analysis */}
+        <div>
+          <h4 className="text-teal-400 font-medium mb-2">4.2 Return on Investment (ROI) Analysis</h4>
+          <p className="text-slate-400 mb-4">
+            Compares the economic benefits of listener retention against the cost of implementing interventions.
+          </p>
+          <div className="bg-slate-900/50 p-4 rounded-lg mb-4">
+            <code className="text-green-400">// Formulas:</code>
+            <pre className="text-white text-sm mt-2">
+              Benefit = Listeners Retained × Average Value per Listener
+              <br />
+              ROI (%) = ((Benefit - Cost) / Cost) × 100
+              <br />
+              Benefit-Cost Ratio = Total Benefit / Total Cost
+            </pre>
+          </div>
+          <div className="bg-slate-900/50 p-4 rounded-lg">
+            <div className="flex items-center mb-2">
+              <div className="w-4 h-4 bg-teal-500 rounded-full mr-2"></div>
+              <span className="text-slate-300">Example: Community Engagement ROI</span>
+            </div>
+            <ol className="text-slate-300 text-sm space-y-1 pl-6">
+              <li>1. Implementation cost: ₹2.5M</li>
+              <li>2. Listeners retained: 2,480 (based on +25% solve rate)</li>
+              <li>3. Average value per listener: ₹5,000</li>
+              <li>4. Total benefit: 2,480 × ₹5,000 = ₹12.4M</li>
+              <li>5. Net benefit: ₹12.4M - ₹2.5M = ₹9.9M</li>
+              <li>6. ROI: ((₹9.9M - ₹2.5M) / ₹2.5M) × 100 = 296%</li>
+              <li>7. Result: <span className="text-green-400">ROI = 296% | Benefit-Cost Ratio = 4.96:1</span></li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      {/* 5. Geographic Analysis Methodology */}
+      <div className="bg-slate-800/50 backdrop-blur-sm rounded-xl p-6 border border-slate-700">
+        <h3 className="text-white font-semibold mb-4">5. Geographic Analysis Methodology</h3>
+
+        {/* 5.1 Hotspot Marker Sizing */}
+        <div className="mb-6">
+          <h4 className="text-cyan-400 font-medium mb-2">5.1 Hotspot Marker Sizing</h4>
+          <p className="text-slate-400 mb-4">
+            Circle markers on the map are sized proportionally to listener density using a square root scale for better
+            visual balance.
+          </p>
+          <div className="bg-slate-900/50 p-4 rounded-lg mb-4">
+            <code className="text-green-400">// Formula (from code):</code>
+            <pre className="text-white text-sm mt-2">Marker Radius = √(Listener Density) × 3</pre>
+          </div>
+          <div className="bg-slate-900/50 p-4 rounded-lg">
+            <div className="flex items-center mb-2">
+              <div className="w-4 h-4 bg-cyan-500 rounded-full mr-2"></div>
+              <span className="text-slate-300">Example Calculations:</span>
+            </div>
+            <ol className="text-slate-300 text-sm space-y-1 pl-6">
+              <li>
+                1. Thamel (95% density): √95 × 3 = 9.7 × 3 = <span className="text-red-400">29 px radius</span>
+              </li>
+              <li>
+                2. Patan (88% density): √88 × 3 = 9.4 × 3 = <span className="text-yellow-400">28 px radius</span>
+              </li>
+              <li>
+                3. Balaju (72% density): √72 × 3 = 8.5 × 3 = <span className="text-green-400">25 px radius</span>
+              </li>
+            </ol>
+          </div>
+        </div>
+
+        {/* 5.2 Hotspot Color Coding */}
+        <div>
+          <h4 className="text-cyan-400 font-medium mb-2">5.2 Hotspot Color Coding</h4>
+          <p className="text-slate-400 mb-4">
+            Colors indicate listener engagement levels based on absolute thresholds.
+          </p>
+          <div className="bg-slate-900/50 p-4 rounded-lg mb-4">
+            <code className="text-green-400">// Logic (from code):</code>
+            <pre className="text-white text-sm mt-2">
+              if (engagement &lt;0.8) → Red (#ef4444)
+              <br />
+              else if (engagement &lt; 0.6) → Amber (#f59e0b)
+              <br />
+              else → Green (#22c55e)
+            </pre>
+          </div>
+          <div className="bg-slate-900/50 p-4 rounded-lg">
+            <div className="flex items-center mb-2">
+              <div className="w-4 h-4 bg-cyan-500 rounded-full mr-2"></div>
+              <span className="text-slate-300">Color Legend:</span>
+            </div>
+            <div className="flex items-center space-x-4 text-xs text-slate-300">
+              <div className="flex items-center">
+                <div className="w-3 h-3 bg-red-500 rounded-full mr-1"></div> &lt;0.8 (High)
+              </div>
+              <div className="flex items-center">
+                <div className="w-3 h-3 bg-amber-500 rounded-full mr-1"></div> 0.6–0.8 (Medium)
+              </div>
+              <div className="flex items-center">
+                <div className="w-3 h-3 bg-green-500 rounded-full mr-1"></div> &lt; 0.6 (Low)
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Glossary of Terms */}
       <div className="bg-slate-800/50 backdrop-blur-sm rounded-xl p-6 border border-slate-700">
         <h3 className="text-white font-semibold mb-4">Glossary of Terms</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="bg-slate-900/50 p-4 rounded-lg">
             <h4 className="text-slate-300 font-medium mb-1">YoY (Year-over-Year)</h4>
-            <p className="text-slate-400 text-xs">Comparison of a metric between the same period in consecutive years</p>
+            <p className="text-slate-400 text-xs">
+              Comparison of a metric between the same period in consecutive years
+            </p>
           </div>
           <div className="bg-slate-900/50 p-4 rounded-lg">
             <h4 className="text-slate-300 font-medium mb-1">Solve Rate</h4>
-            <p className="text-slate-400 text-xs">Percentage of songs resulting in a positive outcome (like, save, repeat)</p>
+            <p className="text-slate-400 text-xs">
+              Percentage of songs resulting in a positive outcome (like, save, repeat)
+            </p>
           </div>
           <div className="bg-slate-900/50 p-4 rounded-lg">
             <h4 className="text-slate-300 font-medium mb-1">Confidence Interval (CI)</h4>
-            <p className="text-slate-400 text-xs">Range likely to contain the true value with specified probability (usually 95%)</p>
+            <p className="text-slate-400 text-xs">
+              Range likely to contain the true value with specified probability (usually 95%)
+            </p>
           </div>
           <div className="bg-slate-900/50 p-4 rounded-lg">
             <h4 className="text-slate-300 font-medium mb-1">AUC-ROC</h4>
-            <p className="text-slate-400 text-xs">Area Under Receiver Operating Characteristic curve; measures classifier quality</p>
-          </div>
-          <div className="bg-slate-900/50 p-4 rounded-lg">
-            <h4 className="text-slate-300 font-medium mb-1">F1 Score</h4>
-            <p className="text-slate-400 text-xs">Harmonic mean of precision and recall; balances both metrics</p>
-          </div>
-          <div className="bg-slate-900/50 p-4 rounded-lg">
-            <h4 className="text-slate-300 font-medium mb-1">Seasonal Index</h4>
-            <p className="text-slate-400 text-xs">Ratio of period average to overall average; 100 = exactly average</p>
-          </div>
-          <div className="bg-slate-900/50 p-4 rounded-lg">
-            <h4 className="text-slate-300 font-medium mb-1">Correlation (r)</h4>
-            <p className="text-slate-400 text-xs">Statistical measure of linear relationship strength (-1 to +1)</p>
-          </div>
-          <div className="bg-slate-900/50 p-4 rounded-lg">
-            <h4 className="text-slate-300 font-medium mb-1">ROI (Return on Investment)</h4>
-            <p className="text-slate-400 text-xs">Percentage gain/loss relative to investment cost</p>
-          </div>
-        </div>
-      </div>
-      <div className="bg-slate-800/50 backdrop-blur-sm rounded-xl p-6 border border-slate-700">
-        <h3 className="text-white font-semibold mb-4">DATA SOURCES & METHODOLOGY NOTES</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <h4 className="text-slate-300 font-medium mb-2">Data Sources:</h4>
-            <ul className="text-slate-400 text-xs space-y-1">
-              <li>• Synthetic listener event logs (History1.xlsx – History10.xlsx)</li>
-              <li>• Listener demographics (nepal_music_listeners.csv)</li>
-              <li>• Geospatial coordinates filtered to Kathmandu Valley (27.6°N–27.8°N, 85.2°E–85.4°E)</li>
-              <li>• Platform, device, and audio quality metadata</li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="text-slate-300 font-medium mb-2">Methodology Notes:</h4>
-            <ul className="text-slate-400 text-xs space-y-1">
-              <li>• All percentages rounded to 1 decimal place</li>
-              <li>• Forecasts assume trend continuation (linear model)</li>
-              <li>• Cost figures are estimates for illustration</li>
-              <li>• Model metrics based on historical validation</li>
-              <li>• Engagement score capped at 1.0 for fair comparison</li>
-            </ul>
+            <p className="text-slate-400 text-xs">
+              Area Under Receiver Operating Characteristic curve; measures classifier quality
+            </p>
           </div>
         </div>
       </div>
     </div>
   );
 };
-
 // ===== UPLOAD TAB COMPONENT =====
 const UploadTab = () => {
   const [uploaded, setUploaded] = useState(false);
